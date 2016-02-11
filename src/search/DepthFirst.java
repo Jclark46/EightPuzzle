@@ -1,46 +1,54 @@
+package search;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.Set;
+import java.util.Stack;
 
-public class AstarMisplaced implements ISearch {
+public class DepthFirst implements ISearch{
 
 	@Override
 	public Node search(Node start, Node goal){
+		int maxStack = 0;
 		
-		int maxQueue = 0;
-		PriorityQueue<Node> queue = new PriorityQueue<Node>(10, new f1Comparator());
+		//Here we use a stack instead of a queue for depth first search
+		Stack<Node> stack = new Stack<Node>();
 		Set<Node> visitedNodes = new HashSet<Node>();
-		queue.add(start);
+		
+		stack.add(start);
 		visitedNodes.add(start);
 		
-		while(!queue.isEmpty()){
-			Node currentState = queue.poll();
+		while(!stack.isEmpty()){
+			Node currentState = stack.pop();
+			
 			if(Arrays.equals(currentState.board, goal.board)){	
 				displayPath(currentState, start);
 				System.out.println("\n**********************************");
 				System.out.println("TOTAL COST: " + currentState.g_N);
 				System.out.println("DEPTH:"  + currentState.depth);
-				System.out.println("SPACE:"  + maxQueue);
+				System.out.println("SPACE: " + maxStack);
 				return currentState;
 			}
+			
 			currentState.children = currentState.getSuccessors();
+			
 			for(Node n : currentState.children){
+				// Check visited nodes
 				if(!visitedNodes.contains(n)){
-					queue.add(n);
-					visitedNodes.add(n);	
+					visitedNodes.add(n);
+					stack.push(n);
 				}
 			}
-			if(queue.size() > maxQueue){
-				maxQueue = queue.size();
+			if(stack.size() > maxStack){
+				maxStack = stack.size();
 			}
-			
 		}
 		return null;
 	}
 
+	
+	
 	@Override
 	public void displayPath(Node n, Node start){
 		
@@ -58,7 +66,5 @@ public class AstarMisplaced implements ISearch {
 			System.out.println("\n" + m);
 		}
 	}
-	
-	
 
 }

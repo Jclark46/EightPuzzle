@@ -1,3 +1,4 @@
+package search;
 import java.util.Scanner;
 
 public class Solver {

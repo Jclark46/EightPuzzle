@@ -1,17 +1,18 @@
+package search;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Node{
 	
 	
-    int[] board = new int[9];
+    public int[] board = new int[9];
 	static int[] goalBoard = {1,2,3,8,0,4,7,6,5};
-	int depth;
-	int cost;
-	int g_N;
+	public int depth;
+	public int cost;
+	public int g_N;
 	Node parent;
 	List<Node> children = new LinkedList<Node>();
 	
@@ -333,81 +334,3 @@ public class Node{
 	
 }
 
-
-//Comparator that is used to sort the queue by order of total cost
-class costComparator implements Comparator<Node> {
-
-	@Override
-	public int compare(Node arg0, Node arg1) {
-		if( arg0.g_N < arg1.g_N){
-			return -1;
-		}
-		else if(arg0.g_N >  arg1.g_N){
-			return 1;
-		}
-		return 0;
-	}
-}
-
-
-// Comparator that is used to sort the queue by order of manhattan distance
-class manhattanComparator implements Comparator<Node> {
-
-	@Override
-	public int compare(Node arg0, Node arg1) {
-		if( Node.getManhattan(arg0.board) < Node.getManhattan(arg1.board)){
-			return -1;
-		}
-		else if(Node.getManhattan(arg0.board) > Node.getManhattan(arg1.board)){
-			return 1;
-		}
-		return 0;
-	}
-}
-
-// Comparator that is used to sort the queue by order of misplaced tiles
-class tilesComparator implements Comparator<Node> {
-
-	@Override
-	public int compare(Node arg0, Node arg1) {
-		if( Node.getMisplaced(arg0.board) < Node.getMisplaced(arg1.board)){
-			return -1;
-		}
-		else if(Node.getMisplaced(arg0.board) > Node.getMisplaced(arg1.board)){
-			return 1;
-		}
-		return 0;
-	}
-}
-
-//Comparator that is used to sort the queue by order of f(n) for first a star
-class f1Comparator implements Comparator<Node> {
-
-	@Override
-	public int compare(Node arg0, Node arg1) {
-		if( Node.getf_NforMisplaced(arg0) < Node.getf_NforMisplaced(arg1)){
-			return -1;
-		}
-		else if(Node.getf_NforMisplaced(arg0) > Node.getf_NforMisplaced(arg1)){
-			return 1;
-		}
-		return 0;
-	}
-}
-	
-//Comparator that is used to sort the queue by order of f(n) for second a star
-class f2Comparator implements Comparator<Node> {
-
-	@Override
-	public int compare(Node arg0, Node arg1) {
-		if( Node.getf_NforManhattan(arg0) < Node.getf_NforManhattan(arg1)){
-			return -1;
-		}
-		else if(Node.getf_NforManhattan(arg0) > Node.getf_NforManhattan(arg1)){
-			return 1;
-		}
-		return 0;
-	}
-
-
-}

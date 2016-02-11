@@ -1,3 +1,4 @@
+package search;
 
 public interface ISearch {
 	public Node search(Node start, Node goal);
